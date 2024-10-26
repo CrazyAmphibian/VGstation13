@@ -64,7 +64,7 @@ datums for the fission reactor, which includes the fuel and reactor
 		controller=null
 	fuel=null
 	var/turf/originloc=locate(origin_x,origin_y,zlevel)
-	originloc.return_air().merge(coolant.remove(coolant.total_moles,TRUE,TRUE),TRUE) //dump all coolant to atmos.
+	originloc?.return_air().merge(coolant.remove(coolant.total_moles,TRUE,TRUE),TRUE) //dump all coolant to atmos.
 	..()
 
 /datum/fission_reactor_holder/proc/verify_integrity() //destroys the reactor if too many parts are missing. fixes stuff lingering.
@@ -93,6 +93,8 @@ datums for the fission reactor, which includes the fuel and reactor
 	
 	if(notlookinggood_points>=3) //if 3 or more criteria are met, something really bad has happened, so just destroy the whole thing.
 		qdel(src)
+		return FALSE
+	return TRUE
 
 /datum/fission_reactor_holder/proc/handledestruction(var/obj/shitgettingfucked)
 	if(istype(shitgettingfucked, /obj/machinery/fissioncontroller ))

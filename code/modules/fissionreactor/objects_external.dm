@@ -260,6 +260,11 @@ included:
 		var/constructionerror=associated_reactor.init_resize(src.loc)
 		if(constructionerror)
 			say("Failed to setup reactor: [constructionerror]", class = "binaryradio")
+			qdel(associated_reactor)
+			associated_reactor=null
+			return
+		if(!associated_reactor.verify_integrity())
+			say("Failed to setup reactor: construction validation error", class = "binaryradio")
 			associated_reactor=null
 			return
 		associated_reactor.init_parts()
